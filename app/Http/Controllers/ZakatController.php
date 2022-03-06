@@ -82,7 +82,6 @@ class ZakatController extends Controller
             $type = $notif->payment_type;
             $orderId = $notif->order_id;
             $fraud = $notif->fraud_status;
-            $donation = Donasi::findOrFail($orderId);
             $donation = Donasi::where('transaction_id', $orderId)->first();
 
             if ($transaction == 'capture') {
