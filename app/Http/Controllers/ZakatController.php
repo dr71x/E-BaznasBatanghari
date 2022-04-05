@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\tipe;
+use App\Models\berita;
 use App\Models\detail;
 use App\Models\Donasi;
 use App\Models\sebutan;
 use App\Models\kategori;
 use Illuminate\Support\Str;
+use App\Models\tentangzakat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -105,5 +108,111 @@ class ZakatController extends Controller
             }
         });
         return;
+    }
+
+    public function Donasi()
+    {
+        return view('zakat.donasi');
+    }
+
+    public function TabelDonasi()
+    {
+        $data['donasi'] = Donasi::orderBy('created_at', 'desc')->cursorPaginate(10);
+        return view('zakat.tabel_donasi', $data);
+    }
+
+    public function berita(){
+        $data['berita'] = berita::orderBy('created_at', 'desc')->get();
+        return view('zakat.berita',$data);
+    }
+
+    public function tambahberita(){
+        $data['tipe'] = tipe::get();
+        return view('zakat.formtambah',$data);
+    }
+
+    public function simpanberita(Request $request){
+        $this->validate($request, [
+            'tipe_id' => 'required',
+            'judul' => 'required',
+            'isi' => 'required',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $path = $request->file('gambar')->store('public/berita');
+
+        $berita = new berita();
+        $berita->tipe_id = $request->tipe_id;
+        $berita->judul = $request->judul;
+        $berita->isi = $request->isi;
+        $berita->gambar = $path;
+        $berita->save();
+
+        return redirect()->back()->with('success', 'Berita berhasil ditambahkan');
+    }
+
+    public function hapusberita($id){
+        $berita = berita::find($id);
+        $berita->delete();
+        return redirect()->back()->with('success', 'Berita berhasil dihapus');
+    }
+
+    public function beritahome($id){
+        $data['berita'] = berita::where('tipe_id', $id)->orderBy('created_at', 'desc')->get();
+        return view('zakat.beritahome',$data);
+    }
+
+    public function tentangkami(){
+        echo "tentang Kami";
+    }
+
+    public function detailberita($id){
+        $data['berita'] = berita::where('id', $id)->orderBy('created_at', 'desc')->first();
+        return view('zakat.detailberita',$data);
+    }
+
+    public function tentangzakat(){
+        $data['tentang'] = tentangzakat::orderBy('created_at', 'desc')->get();
+        return view('zakat.tentangzakattambah',$data);
+    }
+
+    public function formzakat(){
+        $data['detail'] = detail::where('kategori_id','=','1')->get();
+        return view('zakat.tentangzakat',$data);
+    }
+
+    public function zakatsimpan(Request $request){
+        $this->validate($request, [
+            'tipe_id' => 'required',
+            'judul' => 'required',
+            'isi' => 'required',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $path = $request->file('gambar')->store('public/berita');
+
+        $berita = new tentangzakat();
+        $berita->tipe_id = $request->tipe_id;
+        $berita->judul = $request->judul;
+        $berita->isi = $request->isi;
+        $berita->gambar = $path;
+        $berita->save();
+
+        return redirect()->back()->with('success', 'Data berhasil ditambahkan');
+    }
+
+    public function tentanghapus($id){
+        tentangzakat::where('id',$id)->delete();
+        return back()->with('success','Data Berhasil Dihapus');
+    }
+
+    public function tentangzakathome($id){
+        $data['berita'] = tentangzakat::where('tipe_id', $id)->orderBy('created_at', 'desc')->get();
+        return view('zakat.tentangzakathome',$data);
+    }
+
+    public function tentangzakatdetail($id){
+        $data['berita'] = tentangzakat::where('id', $id)->orderBy('created_at', 'desc')->first();
+        return view('zakat.detailtentang',$data);
     }
 }
