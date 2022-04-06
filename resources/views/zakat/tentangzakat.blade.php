@@ -46,17 +46,10 @@
                     </h5>
                 </div>
                 <div class="col-md-8">
-                    <textarea name="isi" id="summernote" cols="30" rows="10" class="form-control"></textarea>
+                    <textarea name="isi" cols="30" rows="10" class="form-control"></textarea>
                 </div>
             </div>
         </div>
         <button class="btn btn-primary float-end" type="submit">Simpan</button>
     </form>
 </div>
-<link src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#summernote').summernote();
-    });
-</script>
