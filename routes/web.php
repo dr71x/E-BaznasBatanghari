@@ -24,7 +24,7 @@ Route::get('/kategori/detail/{id}', [ZakatController::class, 'detail'])->name('d
 Route::get('/berita/{id}',[ZakatController::class, 'beritahome'])->name('home.berita');
 Route::get('/tentangkmi',[ZakatController::class , 'tentangkami'])->name('tentang.kami');
 Route::get('/berita/detail/{id}',[ZakatController::class , 'detailberita'])->name('detail.berita');
-Route::get('/tentang/zakat/{id}',[ZakatController::class, 'tentangzakathome'])->name('home.tentang');
+Route::get('/tentang/zakat/home/{id}',[ZakatController::class, 'tentangzakathome'])->name('home.tentang');
 Route::get('/tentang/zakat/detail/{id}',[ZakatController::class, 'tentangzakatdetail'])->name('detail.tentang');
 
 Route::middleware('auth')->group(function () {
