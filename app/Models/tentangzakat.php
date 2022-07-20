@@ -9,6 +9,7 @@ class tentangzakat extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public $incrementing = false;
 
     public function tipe(){
         return $this->belongsTo(detail::class,'tipe_id');

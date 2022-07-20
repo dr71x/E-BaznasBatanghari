@@ -3,8 +3,8 @@
     <div class="row">
         <div class="col-12">
             <div class="card mb-4 shadow" style="padding: 55px;">
-                <div class="card-header pb-0">
-                    <h6 id="label">Tabel Donasi</h6>
+                <div class="header pb-0">
+                    <h6 id="label">Tabel Berita BAZNAS</h6>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <button class="btn btn-primary" id="tambah">Tambah</button>
@@ -15,7 +15,7 @@
                             <thead>
                                 <tr>
                                     <td>
-                                        #
+                                        No
                                     </td>
                                     <td>
                                         Tipe Berita
@@ -44,10 +44,11 @@
                                             {{ $item->judul }}
                                         </td>
                                         <td>
-                                            <img src="{{ \Storage::url($item->gambar) }}" width="20px" alt="">
+                                            <img src="data:image/{{ $item->type }};base64,{{ $item->gambar }}" width="60px" alt="">
                                         </td>
                                         <td>
-                                            <a data-id="{{ $item->id }}" class="btn btn-danger" id="hapus">Hapus</a>
+                                            <a data-link="{{ route('hapusberita',$item->id) }}" data-id="{{ $item->id }}" class="hapus btn btn-danger" id="hapus">Hapus</a>
+                                            <a data-id="{{ $item->id }}" class="edit btn btn-info" >Edit</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -71,6 +72,21 @@
            $("#label").html("Form Tambah");
         });
 
+        $('.edit').click(function(){
+            $("#form-tambah").slideDown("fast");
+            $("#tabel").slideUp("fast");
+            $("#tambah").hide();
+            $("#batal").show();
+            $("#label").html("Form Edit");
+            var id = $(this).data('id');
+            $.ajax({
+                url: "{{ url('/berita/edit') }}/"+id,
+                type: "GET",
+                success: function(data) {
+                    $("#form-tambah").html(data);
+                }
+            });
+        });
 
         $("#batal").click(function() {
            $("#form-tambah").slideUp("fast");
@@ -80,19 +96,20 @@
            $("#label").html("Tabel Donasi");
         });
 
-        $("#hapus").click(function(){
+        $(".hapus").click(function(){
             var id = $(this).attr("data-id");
+            var link = $(this).attr("data-link");
             Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Apa Kamu Yakin?',
+            text: "Kamu Tidak Akan Dapat Mengembalikan Ini!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Ya, Hapus!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location = "{{ url('/zakat/berita/hapus') }}/"+id;
+                    window.location = link;
                 }
             })
         })

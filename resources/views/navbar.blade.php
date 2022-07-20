@@ -6,7 +6,7 @@
                 <img src="{{ asset('soft') }}/assets/img/baznas.png" width="30px" class="ms-3">
                 <a class="navbar-brand font-weight-bolder ms-sm-3" href="{{ route('home') }}" rel="tooltip"
                     title="Designed and Coded by Creative Tim" data-placement="bottom">
-                    Baznas BatangHari
+                    BAZNAS BatangHari
                 </a>
                 <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
@@ -27,14 +27,14 @@
                         <li class="nav-item dropdown dropdown-hover mx-2">
                             <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
                                 id="dropdownMenuPages" data-bs-toggle="dropdown" aria-expanded="false">
-                                Tentang Zakat
+                                Tentang ZIS
                                 <img src="{{ asset('soft') }}/assets/img/down-arrow-dark.svg" alt="down-arrow"
                                     class="arrow ms-1">
                             </a>
                             <div class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
                                 aria-labelledby="dropdownMenuPages">
                                 <div class="d-none d-lg-block">
-                                    @foreach (\App\Models\detail::get() as $item)
+                                    @foreach (\App\Models\detail::where('zis','=','0')->get() as $item)
                                     <a href="{{ route('home.tentang',["id" => $item->id]) }}"
                                     class="dropdown-item border-radius-md">
                                     <span class="ps-3">{{ $item->nama }}</span>
@@ -122,7 +122,7 @@
                         <li class="nav-item dropdown dropdown-hover mx-2">
                             <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
                                 id="dropdownMenuPages" data-bs-toggle="dropdown" aria-expanded="false">
-                                Berita
+                                Berita BAZNAS
                                 <img src="{{ asset('soft') }}/assets/img/down-arrow-dark.svg" alt="down-arrow"
                                     class="arrow ms-1">
                             </a>
@@ -166,18 +166,6 @@
                                         </div>
                                         Landing Pages
                                     </h6>
-                                    <a href="{{ asset('soft') }}/pages/about-us.html"
-                                        class="dropdown-item border-radius-md">
-                                        <span class="ps-3">About Us</span>
-                                    </a>
-                                    <a href="{{ asset('soft') }}/pages/contact-us.html"
-                                        class="dropdown-item border-radius-md">
-                                        <span class="ps-3">Contact Us</span>
-                                    </a>
-                                    <a href="{{ asset('soft') }}/pages/author.html"
-                                        class="dropdown-item border-radius-md">
-                                        <span class="ps-3">Author</span>
-                                    </a>
                                     <h6
                                         class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center px-0 mt-3">
                                         <div class="d-inline-block">
@@ -207,18 +195,23 @@
                                         </div>
                                         Account
                                     </h6>
-                                    <a href="{{ asset('soft') }}/pages/sign-in.html"
-                                        class="dropdown-item border-radius-md">
-                                        <span class="ps-3">Sign In</span>
-                                    </a>
                                 </div>
                             </div>
+                        </li>
+                        <li class="nav-item dropdown dropdown-hover mx-2">
+                            <a href="{{ route('calculator') }}" class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center">
+                                Kalkulator Zakat
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown dropdown-hover mx-2">
+                            <a href="{{ route('faq') }}" class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center">
+                                FAQ
+                            </a>
                         </li>
                         <li class="nav-item mx-2">
                             <a href="{{ route('zakat') }}"
                                 class="btn bg-gradient-primary nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                                style="color: white">Bayar
-                                Zakat</a>
+                                style="color: white">Bayar Zakat</a>
                         </li>
                     </ul>
                 </div>

@@ -9,4 +9,5 @@ class detail extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public $incrementing = false;
 }
